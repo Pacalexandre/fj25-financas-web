@@ -1,13 +1,17 @@
 package br.com.caelum.financas.mb;
 
-import javax.enterprise.context.RequestScoped;
+import java.io.*;
+
+import javax.enterprise.context.*;
 import javax.inject.*;
 
 import br.com.caelum.financas.service.*;
 
+
 @Named
 @RequestScoped
 public class CicloDeVidaBean {
+	
 	@Inject
 	private Agendador agendador;
 	
