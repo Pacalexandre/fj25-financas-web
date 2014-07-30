@@ -5,7 +5,8 @@ import java.io.*;
 import javax.annotation.*;
 import javax.ejb.*;
 
-@Stateful
+@Singleton
+@Startup
 public class Agendador {
 
 	private static int totalCriado;
@@ -30,6 +31,11 @@ public class Agendador {
 	@PreDestroy
 	void preDestruicao() {
 		System.out.println("Destruindo Agendador");
+	}
+	
+	@Schedule(hour="*", minute="*",second="*/10", dayOfWeek="Wed", persistent=false)
+	public void enviaEmail(){
+		System.out.println("Enviando Email por cada 30 seg");
 	}
 
 }
