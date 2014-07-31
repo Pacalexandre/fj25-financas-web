@@ -2,15 +2,20 @@ package br.com.caelum.financas.mb;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import br.com.caelum.financas.dao.*;
 import br.com.caelum.financas.modelo.Movimentacao;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import javax.inject.*;
 
 @Named
 @RequestScoped
 public class MovimentacoesPorValorETipoBean {
+	
+	@Inject
+	private MovimentacaoDao dao;
 	
 	private List<Movimentacao> movimentacoes;
 	private BigDecimal valor;
@@ -18,7 +23,8 @@ public class MovimentacoesPorValorETipoBean {
 
 
 	public void lista() {
-		System.out.println("Buscando movimentacoes por valor e tipo");
+		movimentacoes = dao.listaPorValorETipo(valor, tipoMovimentacao);
+		//System.out.println("Buscando movimentacoes por valor e tipo");
 	}
 
 	public BigDecimal getValor() {
