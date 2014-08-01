@@ -51,7 +51,7 @@ public class MovimentacoesBean implements Serializable {
 
 	public List<Movimentacao> getMovimentacoes() {
 		if (this.movimentacao.getId() == null) {
-			this.movimentacoes = dao.lista();
+			this.movimentacoes = dao.listaComCategoria();
 		}
 		return movimentacoes;
 	}
@@ -113,9 +113,7 @@ public class MovimentacoesBean implements Serializable {
 	public List<Categoria> getCategorias() {
 		if (this.categorias == null) {
 			this.categorias = this.categoriaDao.lista();
-
 		}
-
 		return this.categorias;
 	}
 

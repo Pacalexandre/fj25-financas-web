@@ -29,6 +29,11 @@ public class MovimentacaoDao {
 		return this.manager.createQuery("select m from Movimentacao m",
 				Movimentacao.class).getResultList();
 	}
+	
+	public List<Movimentacao> listaComCategoria() {
+		return this.manager.createQuery("select m from Movimentacao m left join fetch m.categorias",
+				Movimentacao.class).getResultList();
+	}
 
 	public List<Movimentacao> listaTodasMovimentacoes(Conta conta) {
 		String jpql = "select m from Movimentacao m where m.conta = :conta order by m.valor desc";
