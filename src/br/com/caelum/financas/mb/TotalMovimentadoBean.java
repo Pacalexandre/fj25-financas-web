@@ -46,4 +46,10 @@ public class TotalMovimentadoBean {
 		this.tipoMovimentacao = tipoMovimentacao;
 	}
 
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+	
+	
+
 }
