@@ -4,8 +4,13 @@ import java.io.Serializable;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 @Entity
+@Cacheable
 public class Conta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -18,6 +23,7 @@ public class Conta implements Serializable {
 	private String numero;
 	private String banco;
 	
+	@Cache(usage=CacheConcurrencyStrategy.TRANSACTIONAL)
 	@OneToMany(mappedBy="conta")
 	private List<Movimentacao> movimentacoes;
 

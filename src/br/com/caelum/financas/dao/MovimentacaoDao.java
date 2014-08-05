@@ -47,11 +47,13 @@ public class MovimentacaoDao {
 		return query.getResultList();
 	}
 
+	
 	public List<Movimentacao> listaPorValorETipo(BigDecimal valor,
 			TipoMovimentacao tipo) {
 		String jpql = "select m from Movimentacao m where m.valor <= :valor and m.tipoMovimentacao = :tipo";
 		TypedQuery<Movimentacao> query = this.manager.createQuery(jpql,
 				Movimentacao.class);
+		//query.setHint("org.hibernate.cacheable", "true");
 		query.setParameter("valor", valor);
 		query.setParameter("tipo", tipo);
 		return query.getResultList();
