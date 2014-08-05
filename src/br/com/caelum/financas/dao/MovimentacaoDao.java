@@ -1,19 +1,23 @@
 package br.com.caelum.financas.dao;
 
 import java.math.*;
-import java.util.List;
+import java.util.*;
 
 import javax.ejb.*;
+import javax.inject.*;
 import javax.persistence.*;
+import javax.persistence.criteria.*;
 
 import br.com.caelum.financas.modelo.*;
 
 @Stateless
 public class MovimentacaoDao {
-	@PersistenceContext
+	
+	@Inject
 	EntityManager manager;
 
 	public void adiciona(Movimentacao movimentacao) {
+		this.manager.joinTransaction();
 		this.manager.persist(movimentacao);
 	}
 
@@ -78,6 +82,25 @@ public class MovimentacaoDao {
 		q.setParameter("conta", conta);
 		q.setParameter("tipo", tipo);
 		return q.getResultList();
+	}
+	
+	public List<Movimentacao> pesquisa(Conta conta, TipoMovimentacao tipoMovimentacao,Integer mes){
+		CriteriaBuilder builder = this.manager.getCriteriaBuilder();
+		CriteriaQuery<Movimentacao> criteria = builder.createQuery(Movimentacao.class);
+		Root<Movimentacao> root= criteria.from(Movimentacao.class);
+		Predicate conjuction = builder.conjunction();
+		if (conta.getId() != null){
+			conjuction = builder.and(conjuction,builder.equal(root.<Conta>get("conta"), conta));
+		}
+		if (mes != null && mes !=0) {
+			Expression<Integer> expression = builder.function("mounth", Integer.class, root.<Calendar> get("data"));
+			conjuction = builder.and(conjuction, builder.equal(expression,mes));
+		}
+		if (tipoMovimentacao != null){
+			conjuction = builder.and(conjuction,builder.equal(root.<TipoMovimentacao> get("tipoMovimentacao"), tipoMovimentacao));
+		}
+		criteria.where(conjuction);
+		return this.manager.createQuery(criteria).getResultList();
 	}
 
 }

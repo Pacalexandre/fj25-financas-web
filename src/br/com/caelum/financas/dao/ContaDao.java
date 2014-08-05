@@ -3,6 +3,7 @@ package br.com.caelum.financas.dao;
 import java.util.List;
 
 import javax.ejb.*;
+import javax.inject.*;
 import javax.persistence.*;
 
 import br.com.caelum.financas.modelo.Conta;
@@ -10,7 +11,8 @@ import br.com.caelum.financas.modelo.Conta;
 @Stateless
 public class ContaDao {
 
-	@PersistenceContext
+	@Inject
+	//@PersistenceContext
 	EntityManager manager;
 
 	public void adiciona(Conta conta) {
