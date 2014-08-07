@@ -1,15 +1,17 @@
 package br.com.caelum.financas.mb;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.caelum.financas.dao.*;
-import br.com.caelum.financas.modelo.Conta;
+import br.com.caelum.financas.modelo.*;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.*;
+import javax.validation.*;
 
 @Named
 @SessionScoped
@@ -19,6 +21,9 @@ public class ContasBean implements Serializable {
 
 	@Inject
 	private ContaDao dao;
+	
+	@Inject
+	private Validator validador;
 
 	private Conta conta = new Conta();
 	private List<Conta> contas;
@@ -31,7 +36,13 @@ public class ContasBean implements Serializable {
 		this.conta = conta;
 	}
 
-	public void grava() {
+	
+	public void grava() {	
+		Set<ConstraintViolation<Conta>> error = validador.validate(this.conta);
+		if (!error.isEmpty()){
+			return;
+		}
+		
 		if (this.conta.getId() == null){
 			dao.adiciona(conta);
 		} else {

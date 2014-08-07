@@ -17,7 +17,7 @@ public class Agendador {
 		// simulando demora de 4s na execucao
 		try {
 			System.out.printf("Executando %s %n", this);
-			Thread.sleep(4000);
+			Thread.sleep(4000000);
 		} catch (InterruptedException e) {
 		}
 	}
@@ -33,7 +33,7 @@ public class Agendador {
 		System.out.println("Destruindo Agendador");
 	}
 	
-	@Schedule(hour="*", minute="*",second="*/10", dayOfWeek="Wed", persistent=false)
+	//@Schedule(hour="*", minute="*",second="*/10", dayOfWeek="Wed", persistent=false)
 	public void enviaEmail(){
 		System.out.println("Enviando Email por cada 30 seg");
 	}

@@ -5,12 +5,16 @@ import java.util.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.*;
 
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
+import org.hibernate.validator.constraints.*;
 
 @Entity
 @Cacheable
+@Table(uniqueConstraints={@UniqueConstraint(columnNames = { "agencia","numero" })})
 public class Conta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -18,9 +22,13 @@ public class Conta implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@NotNull
+	@NotEmpty
+	@Size(min=3)
 	private String titular;
 	private String agencia;
 	private String numero;
+	@Column(length=20,nullable=false)
 	private String banco;
 	
 	@Cache(usage=CacheConcurrencyStrategy.TRANSACTIONAL)
