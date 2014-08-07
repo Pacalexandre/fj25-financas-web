@@ -12,9 +12,12 @@ import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.validator.constraints.*;
 
+import br.com.caelum.financas.util.*;
+
 @Entity
 @Cacheable
 @Table(uniqueConstraints={@UniqueConstraint(columnNames = { "agencia","numero" })})
+@NumeroEAgencia
 public class Conta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -24,7 +27,7 @@ public class Conta implements Serializable {
 	private Integer id;
 	@NotNull
 	@NotEmpty
-	@Size(min=3)
+	@Size(min=3,message="{msg.tamanho}")
 	private String titular;
 	private String agencia;
 	private String numero;

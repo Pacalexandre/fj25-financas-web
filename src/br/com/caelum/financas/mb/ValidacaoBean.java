@@ -1,21 +1,31 @@
 package br.com.caelum.financas.mb;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.validation.ConstraintViolation;
-import br.com.caelum.financas.modelo.Conta;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import java.util.*;
+
+import javax.enterprise.context.*;
+import javax.faces.application.*;
+import javax.faces.context.*;
+import javax.inject.*;
+import javax.validation.*;
+
+import br.com.caelum.financas.modelo.*;
 
 @Named
 @RequestScoped
 public class ValidacaoBean {
 
 	private Conta conta = new Conta();
+	@Inject
+	private Validator validador;
 	
 
 	public void validar() {
-		System.out.println("Validando a conta");
+		Set<ConstraintViolation<Conta>> erros = validador.validate(conta);
+		for (ConstraintViolation<Conta> erro : erros){
+			geraMensagemJsf(erro);
+		}
+		
+		
 		
 	}
 	
