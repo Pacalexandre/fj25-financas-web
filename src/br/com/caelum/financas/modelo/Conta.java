@@ -33,6 +33,9 @@ public class Conta implements Serializable {
 	private String numero;
 	@Column(length=20,nullable=false)
 	private String banco;
+	@OneToOne
+	@JoinColumn(unique=true)
+	private Gerente gerente;
 	
 	@Cache(usage=CacheConcurrencyStrategy.TRANSACTIONAL)
 	@OneToMany(mappedBy="conta")
